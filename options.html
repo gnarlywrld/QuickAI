@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Extension Options</title>
+    <style>
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ebf2fa; 
+            color: #05668d; 
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        h1 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px; 
+            color: #05668d; 
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+        }
+
+        .h1-icon {
+            width: 40px;
+            height: 40px;
+        }
+
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #427aa1; 
+        }
+
+        input[type="text"] {
+            box-sizing: border-box;
+            width: 600px;
+            max-width: 100%;
+            padding: 12px;
+            border: 2px solid #427aa1; 
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s, transform 0.2s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #679436;
+            box-shadow: 0 0 8px rgba(103,148,54,0.4);
+            transform: scale(1.02);
+        }
+
+
+        button {
+            display: block;
+            width: 600px;
+            max-width: 100%;
+            margin: 15px auto 0;
+            padding: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+            background-color: #a5be00; 
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            background-color: #679436;
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(103,148,54,0.3);
+        }
+
+        .success-message {
+            margin-top: 15px;
+            font-weight: 500;
+            color: #05668d; 
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        a {
+            color: #427aa1; 
+            text-decoration: none;
+            font-weight: 1000;
+            border-bottom: 2px;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            border-bottom: color #427aa1;
+            color:#00a6e7;
+            cursor: pointer;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="options-wrapper">
+        <h1>
+            <img src="icon.png" alt="QuickAI Icon" class="h1-icon">
+            Welcome to QuickAI Summary Settings
+        </h1>
+
+        <div class="form-group">
+            <label for="api-key">Gemini API key</label>
+            <input type="text" id="api-key" placeholder="Enter your Gemini API key" />
+            <p>
+                Visit 
+                <a href="https://makersuite.google.com/app/apikey" target="_blank">Google AI Studio</a>
+                 and press <strong>+Create API Key</strong>.
+            </p>
+        </div>
+
+        <button id="save-button">Save Settings</button>
+
+        <p id="success-message" class="success-message">Settings saved successfully</p>
+    </div>
+
+    <script src="options.js"></script>
+</body>
+</html>

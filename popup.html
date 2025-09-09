@@ -1,0 +1,147 @@
+<html lang="en">
+    <head>
+        <title>AI Summarizer Extension</title>
+        <style>
+            body{
+                font-family: Arial, sans-serif;
+                background-color: #f5f5f5;
+                min-width: 350px;
+                min-height: 300px;
+                padding: 15px;
+            }
+
+            h2{
+                color: rgb(50, 50, 50);
+                margin-bottom: 15px;
+                text-shadow: 1px 1px 3px rgba(33, 33, 33, 0.3);
+                text-align: center;
+            }
+
+            .options {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+                margin-bottom: 15px;
+                border-radius: 12px;
+            }
+
+            button {
+                padding: 8px 15px;
+                background-color: #427aa1;
+                color: #ebf2fa;
+                border: none;
+                cursor: pointer;
+                font-weight: bold;
+                border-radius: 12px;
+            }
+
+            button:hover {
+                background-color: #05668d;
+
+            }
+
+            #copy-btn {
+                background-color: #a5be00;
+                border-radius: 12px;
+            }
+
+            #copy-btn:hover {
+                background-color: #7db641;
+            }
+
+            #copy-btn:active {
+                box-shadow: 0 0 10px #a5be00;
+            }
+
+            #summary-type {
+                padding: 8px;
+                border-radius: 12px;
+                border: 2px #000000;
+            }
+
+            #result {
+                background-color: #fafcff;
+                margin-top: 15px;
+                padding: 15px;
+                border: 2px #000000;
+                border-radius: 12px;
+                min-height: 150px;
+                max-height: 400px;
+                overflow-y: auto;
+                white-space: pre-wrap;
+                line-height: 1.5;
+            }
+
+            #result ul {
+                padding-left: 20px;
+                transition: opacity 0.4s ease-in-out;
+                opacity: 0;
+            }
+
+            #result li {
+                margin-bottom: 10px;
+                transition: opacity 0.4s ease-in-out;
+                opacity: 0;
+            }
+
+            .loader {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 5px;
+            }
+
+            .loader span {
+                width: 8px;
+                height: 8px;
+                background-color: #427aa1;
+                border-radius: 50%;
+                animation: bounce 1.4s infinite ease-in-out;
+            }
+
+            .loader span:nth-child(1) {
+                animation-delay: 0s;
+            }
+
+            .loader span:nth-child(2) {
+                animation-delay: 0.2s;
+            }
+
+            .loader span:nth-child(3) {
+                animation-delay: 0.4s;
+            }
+
+            @keyframes bounce {
+                0%, 80%, 100% { transform: scale(0); }
+                40% { transform: scale(1); }
+            }
+
+        </style>
+    </head>
+ <body>
+        <h2>
+            <img src="icon.png" alt="AI" style="width:24px; vertical-align:middle; margin-right:8px;">
+            QuickAI Summary
+        </h2>
+
+        <div class="options">
+
+            <select id="summary-type">
+                <option value="brief">Brief</option>
+                <option value="detailed">Detailed</option>
+                <option value="bullets">Bullet Points</option>
+            </select>
+
+            <button id="summarize">Summarize</button>
+            <button id="copy-btn">Copy</button>
+
+        </div>
+
+
+
+        <pre id="result">Select a type and click Summarize...</pre>
+
+        <script src="popup.js"></script>
+    
+ </body>
+</html>
