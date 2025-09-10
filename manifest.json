@@ -5,14 +5,8 @@
   "description": "AI-driven tool that creates concise summaries of online articles.",
 
   "permissions": [
-    "scripting",
     "activeTab",
-    "storage",
-    "tabs"
-  ],
-
-  "host_permissions": [
-    "<all_urls>"
+    "storage"
   ],
 
   "action": {
