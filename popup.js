@@ -1,31 +1,30 @@
-document.getElementById("summarize").addEventListener("click", () => { 
+document.addEventListener("DOMContentLoaded", () => {
+    const summarizeBtn = document.getElementById("summarize");
+    const copyBtn = document.getElementById("copy-btn");
     const result = document.getElementById("result");
-    const summaryType = document.getElementById("summary-type").value;
+    const summaryTypeSelect = document.getElementById("summary-type");
 
-    result.innerHTML = `
-        <div class="loader">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    `;
+    summarizeBtn.addEventListener("click", () => {
+        const summaryType = summaryTypeSelect.value;
 
-    chrome.storage.sync.get(["geminiApiKey"], ({ geminiApiKey }) => {
-        if (!geminiApiKey) {
-            result.textContent = "No API key set. Click the gear icon to add one.";
-            return;
-        }
+        result.innerHTML = `<div class="loader"><span></span><span></span><span></span></div>`;
 
-        chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
-            if (!tab || !tab.id) {
-                result.textContent = "No active tab found.";
+        chrome.storage.sync.get(["geminiApiKey"], ({ geminiApiKey }) => {
+            if (!geminiApiKey) {
+                result.textContent = "No API key set. Click the gear icon to add one.";
                 return;
             }
 
-            chrome.scripting.executeScript(
-                { target: { tabId: tab.id }, files: ["content.js"] },
-                () => {
-                    chrome.tabs.sendMessage(tab.id, { type: "GET_ARTICLE_TEXT" }, async (response) => {
+            chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+                if (!tabs[0] || !tabs[0].id) {
+                    result.textContent = "No active tab found.";
+                    return;
+                }
+
+                chrome.tabs.sendMessage(
+                    tabs[0].id,
+                    { type: "GET_ARTICLE_TEXT" },
+                    async (response) => {
                         if (chrome.runtime.lastError) {
                             result.textContent = "Cannot connect to content script on this page.";
                             return;
@@ -43,9 +42,20 @@ document.getElementById("summarize").addEventListener("click", () => {
                         } catch (error) {
                             result.textContent = "Gemini error: " + error.message;
                         }
-                    });
-                }
-            );
+                    }
+                );
+            });
+        });
+    });
+
+    copyBtn.addEventListener("click", () => {
+        const txt = result.innerText;
+        if (!txt) return;
+
+        navigator.clipboard.writeText(txt).then(() => {
+            const oldText = copyBtn.textContent;
+            copyBtn.textContent = "Copied!";
+            setTimeout(() => (copyBtn.textContent = oldText), 2000);
         });
     });
 });
@@ -84,11 +94,7 @@ async function getGeminiSummary(rawText, type, apiKey) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 contents: [{ parts: [{ text: prompt }] }],
-                generationConfig: {
-                    temperature: 0.2,
-                    maxOutputTokens: 1024,
-                    topP: 0.9
-                }
+                generationConfig: { temperature: 0.2, maxOutputTokens: 1024, topP: 0.9 }
             }),
         }
     );
@@ -99,7 +105,6 @@ async function getGeminiSummary(rawText, type, apiKey) {
     }
 
     const data = await res.json();
-
     let output = "No summary.";
     const candidate = data.candidates?.[0];
 
@@ -123,15 +128,3 @@ async function getGeminiSummary(rawText, type, apiKey) {
 
     return output || "No summary.";
 }
-
-document.getElementById("copy-btn").addEventListener("click", () => {
-    const txt = document.getElementById("result").innerText;
-    if (!txt) return;
-
-    navigator.clipboard.writeText(txt).then(() => {
-        const btn = document.getElementById("copy-btn");
-        const old = btn.textContent;
-        btn.textContent = "Copied!";
-        setTimeout(() => (btn.textContent = old), 2000);
-    });
-});
