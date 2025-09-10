@@ -1,0 +1,21 @@
+## Testing the Chrome Extension
+
+To test this extension locally, follow these steps:
+
+1. **Download the repository as a ZIP file**  
+   Click the **Code** button on the repository page and select **Download ZIP**.  
+
+2. **Extract the ZIP file**  
+   Unzip the downloaded file to a folder on your computer.  
+
+3. **Open Chrome Extensions page**  
+   Go to `chrome://extensions/` in your Chrome browser.  
+
+4. **Enable Developer Mode**  
+   Toggle the **Developer mode** switch in the top right corner of the page.  
+
+5. **Load the unpacked extension**  
+   Click **Load unpacked** and select the folder where you extracted the ZIP file.  
+
+6. **Test the extension**  
+   The extension should now appear in your list of Chrome extensions. You can click its icon and test its functionality.
